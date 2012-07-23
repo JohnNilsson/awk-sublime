@@ -81,6 +81,13 @@
 				</dict>
 			</array>
 		</dict>
+		<key>escaped-char</key>
+		<dict>
+			<key>match</key>
+			<string>\\(?:[\\abfnrtv/"]|x[0-9A-Fa-f]{2}|[0-7]{3})</string>
+			<key>name</key>
+			<string>constant.character.escape.awk</string>
+		</dict>
 		<key>expression</key>
 		<dict>
 			<key>patterns</key>
@@ -303,6 +310,13 @@
 					<string>punctuation.definition.string.end.awk</string>
 				</dict>
 			</dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#escaped-char</string>
+				</dict>
+			</array>
 		</dict>
 		<key>variable</key>
 		<dict>

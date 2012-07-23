@@ -87,7 +87,15 @@
       "beginCaptures": { "0": { "name": "punctuation.definition.string.begin.awk" }},
       "end": "\"",
       "endCaptures": { "0": { "name": "punctuation.definition.string.end.awk" }},
+      "patterns": [
+        { "include": "#escaped-char" }
+      ],
       "contentName": "string.quoted.double.awk"
+    },
+
+    "escaped-char": {
+      "match": "\\\\(?:[\\\\abfnrtv/\"]|x[0-9A-Fa-f]{2}|[0-7]{3})",
+      "name": "constant.character.escape.awk"
     },
 
     "regexp-constant": {
