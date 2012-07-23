@@ -90,7 +90,7 @@
       "patterns": [
         { "include": "#escaped-char" }
       ],
-      "contentName": "string.quoted.double.awk"
+      "name": "string.quoted.double.awk"
     },
 
     "escaped-char": {

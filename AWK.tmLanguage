@@ -298,8 +298,6 @@
 					<string>punctuation.definition.string.begin.awk</string>
 				</dict>
 			</dict>
-			<key>contentName</key>
-			<string>string.quoted.double.awk</string>
 			<key>end</key>
 			<string>"</string>
 			<key>endCaptures</key>
@@ -310,6 +308,8 @@
 					<string>punctuation.definition.string.end.awk</string>
 				</dict>
 			</dict>
+			<key>name</key>
+			<string>string.quoted.double.awk</string>
 			<key>patterns</key>
 			<array>
 				<dict>
