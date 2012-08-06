@@ -282,7 +282,7 @@
 			<array>
 				<dict>
 					<key>include</key>
-					<string>source.escapedregexp</string>
+					<string>source.regexp</string>
 				</dict>
 			</array>
 		</dict>

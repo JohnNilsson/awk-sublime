@@ -104,7 +104,7 @@
       "end": "/",
       "endCaptures":   { "0": { "name": "punctuation.definition.regex.end.awk" } },
       "patterns": [
-        { "include": "source.escapedregexp" }
+        { "include": "source.regexp" }
       ]
     },
 
