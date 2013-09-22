@@ -5,6 +5,11 @@ scopeName: source.awk
 fileTypes:
 - awk
 
+# References
+# http://pubs.opengroup.org/onlinepubs/009695399/utilities/awk.html
+# http://www.gnu.org/software/gawk/manual/html_node/index.html
+# http://www.grymoire.com/Unix/Awk.html
+# http://www.cs.mun.ca/~yzchen/bib/nawkUS.pdf
 patterns:
 - include: '#comment'
 - include: '#procedure'
