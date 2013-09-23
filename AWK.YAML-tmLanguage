@@ -32,9 +32,9 @@ repository:
 
   pattern:
     patterns:
+    - include: '#function-definition'
     - include: '#builtin-pattern'
     - include: '#expression'
-    - include: '#function-definition'
 
   expression:
     patterns:
@@ -49,17 +49,19 @@ repository:
     name: constant.language.awk
 
   function-definition:
-    begin: \b(function)\s+(\w+)\s*(\()
+    begin: \b(function)\s+(\w+)(\()
     beginCaptures:
       '1': { name: storage.type.function.awk }
       '2': { name: entity.name.function.awk }
       '3': { name: punctuation.definition.parameters.begin.awk }
     end: \)
     endCaptures:
-      '0': { name: punctuation.definition.parameters.end.js }
+      '0': { name: punctuation.definition.parameters.end.awk }
     patterns:
     - match: \b(\w+)\b
-      name: variable.parameter.function.js
+      name: variable.parameter.function.awk
+    - match: \b(,)\b
+      name: punctuation.separator.parameters.awk
 
   constant:
     patterns:
@@ -115,7 +117,7 @@ repository:
     patterns:
     - match: \b(?:next|print|printf)\b
       name: keyword.other.command.awk
-    - match: \b(?:close|getline|delete|function|system)\b
+    - match: \b(?:close|getline|delete|system)\b
       name: keyword.other.command.nawk
     - match: \b(?:fflush|nextfile)\b
       name: keyword.other.command.bell-awk

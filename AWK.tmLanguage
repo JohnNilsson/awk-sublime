@@ -44,7 +44,7 @@
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>\b(?:close|getline|delete|function|system)\b</string>
+					<string>\b(?:close|getline|delete|system)\b</string>
 					<key>name</key>
 					<string>keyword.other.command.nawk</string>
 				</dict>
@@ -141,7 +141,7 @@
 		<key>function-definition</key>
 		<dict>
 			<key>begin</key>
-			<string>\b(function)\s+(\w+)\s*(\()</string>
+			<string>\b(function)\s+(\w+)(\()</string>
 			<key>beginCaptures</key>
 			<dict>
 				<key>1</key>
@@ -167,7 +167,7 @@
 				<key>0</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.parameters.end.js</string>
+					<string>punctuation.definition.parameters.end.awk</string>
 				</dict>
 			</dict>
 			<key>patterns</key>
@@ -176,7 +176,13 @@
 					<key>match</key>
 					<string>\b(\w+)\b</string>
 					<key>name</key>
-					<string>variable.parameter.function.js</string>
+					<string>variable.parameter.function.awk</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\b(,)\b</string>
+					<key>name</key>
+					<string>punctuation.separator.parameters.awk</string>
 				</dict>
 			</array>
 		</dict>
@@ -218,15 +224,15 @@
 			<array>
 				<dict>
 					<key>include</key>
+					<string>#function-definition</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#builtin-pattern</string>
 				</dict>
 				<dict>
 					<key>include</key>
 					<string>#expression</string>
-				</dict>
-				<dict>
-					<key>include</key>
-					<string>#function-definition</string>
 				</dict>
 			</array>
 		</dict>
