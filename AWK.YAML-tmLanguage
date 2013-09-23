@@ -133,9 +133,19 @@ repository:
 
   operator:
     patterns:
-    - match: (?:[\+\-*/%}^<>!=]|\*\*)=?|[|&+-]{2}|~!|\[|\]?
-      name: keyword.operator.awk
-    - match: \bin\b
-      name: keyword.operator.nawk
-      
+    - match: (!?~|[=<>!]=|[<>])
+      name: keyword.operator.comparison.awk
+    - match: \b(in)\b
+      name: keyword.operator.comparison.awk
+    - match: ([+\-*/%^]=|\+\+|--|>>|=)
+      name: keyword.operator.assignment.awk
+    - match: (\|\||&&|!)
+      name: keyword.operator.boolean.awk
+    - match: ([+\-*/%^])
+      name: keyword.operator.arithmetic.awk
+    - match: ([?:])
+      name: keyword.operator.trinary.awk
+    - match: (\[|\])
+      name: keyword.operator.index.awk
+
 uuid: 67bd1ff0-006b-4c32-8b97-8bc198777582
