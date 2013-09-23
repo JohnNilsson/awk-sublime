@@ -38,11 +38,22 @@ repository:
 
   expression:
     patterns:
+    - include: '#grouped-expression'
     - include: '#command'
     - include: '#function'
     - include: '#constant'
     - include: '#variable'
     - include: '#operator'
+
+  grouped-expression:
+    begin: \(
+    beginCaptures:
+      '0': { name: meta.brace.round.awk }
+    end: \)
+    endCaptures:
+      '0': { name: meta.brace.round.awk }
+    patterns:
+    - include: '#expression'
 
   builtin-pattern:
     match: \b(BEGINFILE|BEGIN|ENDFILE|END)\b
