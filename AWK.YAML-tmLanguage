@@ -32,6 +32,7 @@ repository:
 
   pattern:
     patterns:
+    - include: '#regexp-as-pattern'
     - include: '#function-definition'
     - include: '#builtin-pattern'
     - include: '#expression'
@@ -43,6 +44,7 @@ repository:
     - include: '#function'
     - include: '#constant'
     - include: '#variable'
+    - include: '#regexp-in-expression'
     - include: '#operator'
 
   grouped-expression:
@@ -78,7 +80,6 @@ repository:
     patterns:
     - include: '#numeric-constant'
     - include: '#string-constant'
-    - include: '#regexp-constant'
 
   numeric-constant:
     match: \b[0-9]+(?:\.[0-9]+)?(?:e[+-][0-9]+)?\b
@@ -99,13 +100,28 @@ repository:
     match: \\(?:[\\abfnrtv/"]|x[0-9A-Fa-f]{2}|[0-7]{3})
     name: constant.character.escape.awk
 
-  regexp-constant:
+  regexp-as-pattern:
     begin: /
     beginCaptures:
-      '0': { name: punctuation.definition.regex.start.awk }
-    end: /|$
+      '0': { name: punctuation.definition.regex.begin.awk  }
+    end: /
     endCaptures:
       '0': { name: punctuation.definition.regex.end.awk }
+    contentName: string.regexp
+    patterns:
+    - include: source.regexp
+
+  # To avoid ambiguity with division operators regexps are only
+  # valid in places were division is not.
+  regexp-in-expression:
+    begin: (!~|~|[^=<>!+\-*/%^]=)\s*(/)
+    beginCaptures:
+      '1': { name: keyword.operator.assignment.awk }
+      '2': { name: punctuation.definition.regex.begin.awk }
+    end: /
+    endCaptures:
+      '0': { name: punctuation.definition.regex.end.awk }
+    contentName: string.regexp
     patterns:
     - include: source.regexp
 

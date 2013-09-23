@@ -75,10 +75,6 @@
 					<key>include</key>
 					<string>#string-constant</string>
 				</dict>
-				<dict>
-					<key>include</key>
-					<string>#regexp-constant</string>
-				</dict>
 			</array>
 		</dict>
 		<key>escaped-char</key>
@@ -94,6 +90,10 @@
 			<array>
 				<dict>
 					<key>include</key>
+					<string>#grouped-expression</string>
+				</dict>
+				<dict>
+					<key>include</key>
 					<string>#command</string>
 				</dict>
 				<dict>
@@ -107,6 +107,10 @@
 				<dict>
 					<key>include</key>
 					<string>#variable</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#regexp-in-expression</string>
 				</dict>
 				<dict>
 					<key>include</key>
@@ -186,6 +190,36 @@
 				</dict>
 			</array>
 		</dict>
+		<key>grouped-expression</key>
+		<dict>
+			<key>begin</key>
+			<string>\(</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>meta.brace.round.awk</string>
+				</dict>
+			</dict>
+			<key>end</key>
+			<string>\)</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>meta.brace.round.awk</string>
+				</dict>
+			</dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>#expression</string>
+				</dict>
+			</array>
+		</dict>
 		<key>keyword</key>
 		<dict>
 			<key>match</key>
@@ -206,15 +240,45 @@
 			<array>
 				<dict>
 					<key>match</key>
-					<string>(?:[\+\-*/%}^&lt;&gt;!=]|\*\*)=?|[|&amp;+-]{2}|~!|\[|\]?</string>
+					<string>(!?~|[=&lt;&gt;!]=|[&lt;&gt;])</string>
 					<key>name</key>
-					<string>keyword.operator.awk</string>
+					<string>keyword.operator.comparison.awk</string>
 				</dict>
 				<dict>
 					<key>match</key>
-					<string>\bin\b</string>
+					<string>\b(in)\b</string>
 					<key>name</key>
-					<string>keyword.operator.nawk</string>
+					<string>keyword.operator.comparison.awk</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>([+\-*/%^]=|\+\+|--|&gt;&gt;|=)</string>
+					<key>name</key>
+					<string>keyword.operator.assignment.awk</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>(\|\||&amp;&amp;|!)</string>
+					<key>name</key>
+					<string>keyword.operator.boolean.awk</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>([+\-*/%^])</string>
+					<key>name</key>
+					<string>keyword.operator.arithmetic.awk</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>([?:])</string>
+					<key>name</key>
+					<string>keyword.operator.trinary.awk</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>(\[|\])</string>
+					<key>name</key>
+					<string>keyword.operator.index.awk</string>
 				</dict>
 			</array>
 		</dict>
@@ -222,6 +286,10 @@
 		<dict>
 			<key>patterns</key>
 			<array>
+				<dict>
+					<key>include</key>
+					<string>#regexp-as-pattern</string>
+				</dict>
 				<dict>
 					<key>include</key>
 					<string>#function-definition</string>
@@ -262,7 +330,7 @@
 				</dict>
 			</array>
 		</dict>
-		<key>regexp-constant</key>
+		<key>regexp-as-pattern</key>
 		<dict>
 			<key>begin</key>
 			<string>/</string>
@@ -271,11 +339,50 @@
 				<key>0</key>
 				<dict>
 					<key>name</key>
-					<string>punctuation.definition.regex.start.awk</string>
+					<string>punctuation.definition.regex.begin.awk</string>
 				</dict>
 			</dict>
+			<key>contentName</key>
+			<string>string.regexp</string>
 			<key>end</key>
-			<string>/|$</string>
+			<string>/</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.regex.end.awk</string>
+				</dict>
+			</dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>source.regexp</string>
+				</dict>
+			</array>
+		</dict>
+		<key>regexp-in-expression</key>
+		<dict>
+			<key>begin</key>
+			<string>(!~|~|[^=&lt;&gt;!+\-*/%^]=)\s*(/)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.assignment.awk</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.regex.begin.awk</string>
+				</dict>
+			</dict>
+			<key>contentName</key>
+			<string>string.regexp</string>
+			<key>end</key>
+			<string>/</string>
 			<key>endCaptures</key>
 			<dict>
 				<key>0</key>
