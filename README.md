@@ -1,4 +1,4 @@
 awk-sublime
 ===========
 
-Awk syntax highlighting in Sublime Text 2
+Awk syntax highlighting
