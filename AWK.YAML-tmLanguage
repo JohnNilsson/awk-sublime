@@ -39,23 +39,22 @@ repository:
 
   expression:
     patterns:
-    - include: '#grouped-expression'
     - include: '#command'
     - include: '#function'
     - include: '#constant'
     - include: '#variable'
     - include: '#regexp-in-expression'
     - include: '#operator'
+    - include: '#groupings'
 
-  grouped-expression:
-    begin: \(
-    beginCaptures:
-      '0': { name: meta.brace.round.awk }
-    end: \)
-    endCaptures:
-      '0': { name: meta.brace.round.awk }
+  groupings:
     patterns:
-    - include: '#expression'
+    - match: \(
+      name: meta.brace.round.awk
+    - match: \)
+      name: meta.brace.round.awk
+    - match: \,
+      name: punctuation.separator.parameters.awk
 
   builtin-pattern:
     match: \b(BEGINFILE|BEGIN|ENDFILE|END)\b
@@ -114,9 +113,52 @@ repository:
   # To avoid ambiguity with division operators regexps are only
   # valid in places were division is not.
   regexp-in-expression:
-    begin: (!~|~|[^=<>!+\-*/%^]=)\s*(/)
+    patterns:
+    - include: '#regex-as-assignment'
+    - include: '#regex-as-comparison'
+    - include: '#regex-as-first-argument'
+    - include: '#regex-as-nth-argument'
+
+  regex-as-assignment:
+    begin: ([^=<>!+\-*/%^]=)\s*(/)
     beginCaptures:
       '1': { name: keyword.operator.assignment.awk }
+      '2': { name: punctuation.definition.regex.begin.awk }
+    end: /
+    endCaptures:
+      '0': { name: punctuation.definition.regex.end.awk }
+    contentName: string.regexp
+    patterns:
+    - include: source.regexp
+
+  regex-as-comparison:
+    begin: (!?~)\s*(/)
+    beginCaptures:
+      '1': { name: keyword.operator.comparison.awk }
+      '2': { name: punctuation.definition.regex.begin.awk }
+    end: /
+    endCaptures:
+      '0': { name: punctuation.definition.regex.end.awk }
+    contentName: string.regexp
+    patterns:
+    - include: source.regexp
+
+  regex-as-first-argument:
+    begin: (\()\s*(/)
+    beginCaptures:
+      '1': { name: meta.brace.round.awk }
+      '2': { name: punctuation.definition.regex.begin.awk }
+    end: /
+    endCaptures:
+      '0': { name: punctuation.definition.regex.end.awk }
+    contentName: string.regexp
+    patterns:
+    - include: source.regexp
+
+  regex-as-nth-argument:
+    begin: (,)\s*(/)
+    beginCaptures:
+      '1': { name: punctuation.separator.parameters.awk }
       '2': { name: punctuation.definition.regex.begin.awk }
     end: /
     endCaptures:

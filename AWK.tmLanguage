@@ -90,10 +90,6 @@
 			<array>
 				<dict>
 					<key>include</key>
-					<string>#grouped-expression</string>
-				</dict>
-				<dict>
-					<key>include</key>
 					<string>#command</string>
 				</dict>
 				<dict>
@@ -115,6 +111,10 @@
 				<dict>
 					<key>include</key>
 					<string>#operator</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#groupings</string>
 				</dict>
 			</array>
 		</dict>
@@ -190,33 +190,27 @@
 				</dict>
 			</array>
 		</dict>
-		<key>grouped-expression</key>
+		<key>groupings</key>
 		<dict>
-			<key>begin</key>
-			<string>\(</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>meta.brace.round.awk</string>
-				</dict>
-			</dict>
-			<key>end</key>
-			<string>\)</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>meta.brace.round.awk</string>
-				</dict>
-			</dict>
 			<key>patterns</key>
 			<array>
 				<dict>
-					<key>include</key>
-					<string>#expression</string>
+					<key>match</key>
+					<string>\(</string>
+					<key>name</key>
+					<string>meta.brace.round.awk</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\)</string>
+					<key>name</key>
+					<string>meta.brace.round.awk</string>
+				</dict>
+				<dict>
+					<key>match</key>
+					<string>\,</string>
+					<key>name</key>
+					<string>punctuation.separator.parameters.awk</string>
 				</dict>
 			</array>
 		</dict>
@@ -330,6 +324,154 @@
 				</dict>
 			</array>
 		</dict>
+		<key>regex-as-assignment</key>
+		<dict>
+			<key>begin</key>
+			<string>([^=&lt;&gt;!+\-*/%^]=)\s*(/)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.assignment.awk</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.regex.begin.awk</string>
+				</dict>
+			</dict>
+			<key>contentName</key>
+			<string>string.regexp</string>
+			<key>end</key>
+			<string>/</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.regex.end.awk</string>
+				</dict>
+			</dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>source.regexp</string>
+				</dict>
+			</array>
+		</dict>
+		<key>regex-as-comparison</key>
+		<dict>
+			<key>begin</key>
+			<string>(!?~)\s*(/)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>keyword.operator.comparison.awk</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.regex.begin.awk</string>
+				</dict>
+			</dict>
+			<key>contentName</key>
+			<string>string.regexp</string>
+			<key>end</key>
+			<string>/</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.regex.end.awk</string>
+				</dict>
+			</dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>source.regexp</string>
+				</dict>
+			</array>
+		</dict>
+		<key>regex-as-first-argument</key>
+		<dict>
+			<key>begin</key>
+			<string>(\()\s*(/)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>meta.brace.round.awk</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.regex.begin.awk</string>
+				</dict>
+			</dict>
+			<key>contentName</key>
+			<string>string.regexp</string>
+			<key>end</key>
+			<string>/</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.regex.end.awk</string>
+				</dict>
+			</dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>source.regexp</string>
+				</dict>
+			</array>
+		</dict>
+		<key>regex-as-nth-argument</key>
+		<dict>
+			<key>begin</key>
+			<string>(,)\s*(/)</string>
+			<key>beginCaptures</key>
+			<dict>
+				<key>1</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.separator.parameters.awk</string>
+				</dict>
+				<key>2</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.regex.begin.awk</string>
+				</dict>
+			</dict>
+			<key>contentName</key>
+			<string>string.regexp</string>
+			<key>end</key>
+			<string>/</string>
+			<key>endCaptures</key>
+			<dict>
+				<key>0</key>
+				<dict>
+					<key>name</key>
+					<string>punctuation.definition.regex.end.awk</string>
+				</dict>
+			</dict>
+			<key>patterns</key>
+			<array>
+				<dict>
+					<key>include</key>
+					<string>source.regexp</string>
+				</dict>
+			</array>
+		</dict>
 		<key>regexp-as-pattern</key>
 		<dict>
 			<key>begin</key>
@@ -364,38 +506,23 @@
 		</dict>
 		<key>regexp-in-expression</key>
 		<dict>
-			<key>begin</key>
-			<string>(!~|~|[^=&lt;&gt;!+\-*/%^]=)\s*(/)</string>
-			<key>beginCaptures</key>
-			<dict>
-				<key>1</key>
-				<dict>
-					<key>name</key>
-					<string>keyword.operator.assignment.awk</string>
-				</dict>
-				<key>2</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.regex.begin.awk</string>
-				</dict>
-			</dict>
-			<key>contentName</key>
-			<string>string.regexp</string>
-			<key>end</key>
-			<string>/</string>
-			<key>endCaptures</key>
-			<dict>
-				<key>0</key>
-				<dict>
-					<key>name</key>
-					<string>punctuation.definition.regex.end.awk</string>
-				</dict>
-			</dict>
 			<key>patterns</key>
 			<array>
 				<dict>
 					<key>include</key>
-					<string>source.regexp</string>
+					<string>#regex-as-assignment</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#regex-as-comparison</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#regex-as-first-argument</string>
+				</dict>
+				<dict>
+					<key>include</key>
+					<string>#regex-as-nth-argument</string>
 				</dict>
 			</array>
 		</dict>
