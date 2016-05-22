@@ -6,6 +6,8 @@
 function a_function(a_function_argument, another_argument) {
 	a ? asf : asd
 	a_variable = 1 + 2 - 3 * 5 ^ 5 / 4
+	a_variable = 1 + 2 - 3 * 5 ^ 5
+	a_variable = a_variable / 4
 	a /= humm
 	a_function_call = a_function(a_variable)
 	trinary = ( a == b ) ? c : d
