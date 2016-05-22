@@ -35,19 +35,23 @@ contexts:
         - include: expression
 
   pattern:
-    - include: regexp-as-pattern
+    - include: regexp
     - include: function-definition
     - include: builtin-pattern
     - include: expression
 
+  #TODO: Resolve regex / operator ambiguity
+  #Will probably have to split expression
+  #into seperate unary/binary states
+  #See https://github.com/sublimehq/Packages/blob/master/JavaScript/JavaScript.sublime-syntax
   expression:
     - include: command
     - include: function
     - include: constant
     - include: variable
-    - include: regexp-in-expression
-    - include: operator
     - include: groupings
+    - include: operator
+    - include: regexp
 
   groupings:
     - match: \(
@@ -101,78 +105,25 @@ contexts:
     - match: '\\(?:[\\abfnrtv/"]|x[0-9A-Fa-f]{2}|[0-7]{3})'
       scope: constant.character.escape.awk
 
-  regexp-as-pattern:
-    - match: /
-      captures:
-        0: punctuation.definition.regex.begin.awk
-      push:
-        - meta_content_scope: string.regexp
-        - match: /
-          captures:
-            0: punctuation.definition.regex.end.awk
-          pop: true
-        - include: scope:source.regexp
-
   # To avoid ambiguity with division operators regexps are only
   # valid in places were division is not.
-  regexp-in-expression:
-    - include: regex-as-assignment
-    - include: regex-as-comparison
-    - include: regex-as-first-argument
-    - include: regex-as-nth-argument
-
-  regex-as-assignment:
-    - match: '([^=<>!+\-*/%^]=)\s*(/)'
-      captures:
-        1: keyword.operator.assignment.awk
-        2: punctuation.definition.regex.begin.awk
+  # Hacking around the ambiguity here by forward matching
+  # for and end of regex marker.
+  # TODO: Handle edge cases betteer
+  regexp:
+    - match: /(?=(\\.|[^/])*/)
+      scope: punctuation.definition.regex.begin.awk
       push:
         - meta_content_scope: string.regexp
         - match: /
-          captures:
-            0: punctuation.definition.regex.end.awk
+          scope: punctuation.definition.regex.end.awk
           pop: true
-        - include: scope:source.regexp
-
-  regex-as-comparison:
-    - match: (!?~)\s*(/)
-      captures:
-        1: keyword.operator.comparison.awk
-        2: punctuation.definition.regex.begin.awk
-      push:
-        - meta_content_scope: string.regexp
-        - match: /
-          captures:
-            0: punctuation.definition.regex.end.awk
-          pop: true
-        - include: scope:source.regexp
-
-  regex-as-first-argument:
-    - match: (\()\s*(/)
-      captures:
-        1: meta.brace.round.awk
-        2: punctuation.definition.regex.begin.awk
-      with_prototype:
-        - match: /
-          captures:
-            0: punctuation.definition.regex.end.awk
-          pop: true
-      push:
-        - meta_content_scope: string.regexp
-        - include: scope:source.regexp
-
-  regex-as-nth-argument:
-    - match: (,)\s*(/)
-      captures:
-        1: punctuation.separator.parameters.awk
-        2: punctuation.definition.regex.begin.awk
-      push:
-        - meta_content_scope: string.regexp
-        - match: /
-          captures:
-            0: punctuation.definition.regex.end.awk
-          pop: true
-        - include: scope:source.regexp
+        - match: '(?=.|\n)'
+          with_prototype:
+            - match: (?=/)
+              pop: true
+          push:
+            - include: scope:source.regexp
 
   variable:
     - match: '\$[0-9]+'
@@ -213,7 +164,7 @@ contexts:
       scope: keyword.operator.assignment.awk
     - match: (\|\||&&|!)
       scope: keyword.operator.boolean.awk
-    - match: '([+\-*/%^])'
+    - match: '([+\-*/%^])(?=[^/]*[,\);\n])' #Lookahead for expression end to exclude regexp
       scope: keyword.operator.arithmetic.awk
     - match: "([?:])"
       scope: keyword.operator.trinary.awk

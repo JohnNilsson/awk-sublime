@@ -11,7 +11,7 @@ function a_function(a_function_argument, another_argument) {
 	trinary = ( a == b ) ? c : d
 	(1,2,3) in arr
 	a[2] = badum;
-	sub (/primary=/, "", primary_name, /asd/, 1/2);
+	sub (/primary=/, "", primary_name, /asd/, 1/2, 3/4);
 }
 
 
@@ -19,6 +19,7 @@ BEGIN {
     var1 = -18-8
     var2 = log(7)
     var2 /= 3
+    a_function(/aa/)
 }
 
 /abc+\/[123]/ {
