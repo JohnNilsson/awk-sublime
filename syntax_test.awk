@@ -35,20 +35,24 @@ BEGIN {
 #           ^    constant.numeric.awk
 #            ^   keyword.operator.arithmetic.awk
 #             ^  constant.numeric.awk
-#               ^      punctuation.definition.regex.begin.awk
-#                ^^^^  string.regexp
-#                    ^ punctuation.definition.regex.end.awk
+#              ^        punctuation.separator.parameters.awk
+#               ^       punctuation.definition.regex.begin.awk
+#                ^^^^   string.regexp
+#                    ^  punctuation.definition.regex.end.awk
+#                     ^     punctuation.separator.parameters.awk
 #                      ^    constant.numeric.awk
 #                       ^   keyword.operator.arithmetic.awk
 #                        ^  constant.numeric.awk
+#                         ^       punctuation.separator.parameters.awk
 #                          ^      punctuation.definition.regex.begin.awk
 #                           ^^^^  string.regexp
 #                               ^ punctuation.definition.regex.end.awk
-    var = 1/4+1/4
-#       ^       constant.numeric.awk
-#        ^      keyword.operator.arithmetic.awk
-#         ^     constant.numeric.awk
-#          ^    constant.numeric.awk
-#           ^   keyword.operator.arithmetic.awk
-#            ^  constant.numeric.awk
+    var = 1 / 4 + 1 / 4
+#         ^             constant.numeric.awk
+#           ^           keyword.operator.arithmetic.awk
+#             ^         constant.numeric.awk
+#               ^       keyword.operator.arithmetic.awk
+#                 ^     constant.numeric.awk
+#                   ^   keyword.operator.arithmetic.awk
+#                     ^ constant.numeric.awk
 }
