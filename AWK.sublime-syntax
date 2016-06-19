@@ -25,9 +25,11 @@ contexts:
       scope: punctuation.definition.comment.awk
 
   procedure:
-    - match: '\{'
+    - match: '{'
+      scope: meta.brace.curly.awk
       push:
-        - match: '\}'
+        - match: '}'
+          scope: meta.brace.curly.awk
           pop: true
         - include: comment
         - include: procedure
