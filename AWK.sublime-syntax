@@ -13,6 +13,10 @@ file_extensions:
 # http://www.gnu.org/software/gawk/manual/html_node/index.html
 # http://www.grymoire.com/Unix/Awk.html
 # http://www.cs.mun.ca/~yzchen/bib/nawkUS.pdf
+variables:
+
+  NAME: '[A-Za-z_][A-Za-z_0-9]*'
+
 contexts:
 
   main:
@@ -68,7 +72,7 @@ contexts:
       scope: constant.language.awk
 
   function-definition:
-    - match: \b(function)\s+(\w+)(\()
+    - match: \b(function)\s+({{NAME}})(\()
       captures:
         1: storage.type.function.awk
         2: entity.name.function.awk
@@ -136,6 +140,8 @@ contexts:
       scope: variable.language.nawk
     - match: \b(?:ARGIND|ERRNO|FIELDWIDTHS|IGNORECASE|RT)\b
       scope: variable.language.gawk
+    - match: '\b{{NAME}}\b'
+      scope: variable.other.readwrite.awk
 
   keyword:
     - match: \b(?:break|continue|do|while|exit|for|if|else|return)\b
@@ -156,6 +162,8 @@ contexts:
       scope: support.function.nawk
     - match: \b(?:gensub|strftime|systime)\b
       scope: support.function.gawk
+    - match: \b{{NAME}}(?=\s*\()
+      scope: entity.name.function.awk
 
   operator:
     - match: "(!?~|[=<>!]=|[<>])"
