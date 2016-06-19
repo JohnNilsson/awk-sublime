@@ -22,7 +22,7 @@ contexts:
 
   comment:
     - match: "#.*"
-      scope: comment.line.number-sign.awk
+      scope: punctuation.definition.comment.awk
 
   procedure:
     - match: '\{'
