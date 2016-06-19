@@ -41,7 +41,6 @@ contexts:
         - include: expression
 
   pattern:
-    - include: regexp
     - include: function-definition
     - include: builtin-pattern
     - include: expression
@@ -51,19 +50,25 @@ contexts:
   #into seperate unary/binary states
   #See https://github.com/sublimehq/Packages/blob/master/JavaScript/JavaScript.sublime-syntax
   expression:
+    - include: comment
     - include: command
     - include: function
     - include: constant
     - include: variable
     - include: groupings
-    - include: operator
+    - include: prefix-operator
     - include: regexp
+    - match: '(?=[\S])'
+      pop: true
 
   groupings:
     - match: \(
       scope: meta.brace.round.awk
+    - match: \)(?=\s*{)
+      scope: meta.brace.round.awk
     - match: \)
       scope: meta.brace.round.awk
+      push: infix-operator
     - match: \,
       scope: punctuation.separator.parameters.awk
 
@@ -94,6 +99,7 @@ contexts:
   numeric-constant:
     - match: '\b[0-9]+(?:\.[0-9]+)?(?:e[+-][0-9]+)?\b'
       scope: constant.numeric.awk
+      push: infix-operator
 
   string-constant:
     - match: '"'
@@ -111,20 +117,19 @@ contexts:
 
   # To avoid ambiguity with division operators regexps are only
   # valid in places were division is not.
-  # Hacking around the ambiguity here by forward matching
-  # for and end of regex marker.
-  # TODO: Handle edge cases betteer
   regexp:
-    - match: /(?=(\\.|[^/])*/)
+    - match: /
       scope: punctuation.definition.regex.begin.awk
       push:
         - meta_content_scope: string.regexp
-        - match: /
-          scope: punctuation.definition.regex.end.awk
-          pop: true
+        - match: "(/)([gimy]*)"
+          captures:
+            1: punctuation.definition.regex.end.awk
+            2: keyword.other.awk
+          set: infix-operator
         - match: '(?=.|\n)'
           with_prototype:
-            - match: (?=/)
+            - match: '(?=/)'
               pop: true
           push:
             - include: scope:source.regexp
@@ -132,14 +137,19 @@ contexts:
   variable:
     - match: '\$[0-9]+'
       scope: variable.language.awk
+      push: infix-operator
     - match: \b(?:FILENAME|FS|NF|NR|OFMT|OFS|ORS|RS)\b
       scope: variable.language.awk
+      push: infix-operator
     - match: \b(?:ARGC|ARGV|CONVFMT|ENVIRON|FNR|RLENGTH|RSTART|SUBSEP)\b
       scope: variable.language.nawk
+      push: infix-operator
     - match: \b(?:ARGIND|ERRNO|FIELDWIDTHS|IGNORECASE|RT)\b
       scope: variable.language.gawk
+      push: infix-operator
     - match: '\b{{NAME}}\b'
       scope: variable.other.readwrite.awk
+      push: infix-operator
 
   keyword:
     - match: \b(?:break|continue|do|while|exit|for|if|else|return)\b
@@ -163,18 +173,35 @@ contexts:
     - match: \b{{NAME}}(?=\s*\()
       scope: entity.name.function.awk
 
-  operator:
-    - match: "(!?~|[=<>!]=|[<>])"
+  prefix-operator:
+    - match: '[+-]'
+      scope: keyword.operator.arithmetic.awk
+      set: expression
+
+  infix-operator:
+    - match: "!?~|[=<>!]=|[<>]"
       scope: keyword.operator.comparison.awk
+      set: expression
     - match: \b(in)\b
       scope: keyword.operator.comparison.awk
-    - match: '([+\-*/%^]=|\+\+|--|>>|=)'
+      set: expression
+    - match: '[+\-*/%^]=|\+\+|--|>>|='
       scope: keyword.operator.assignment.awk
-    - match: (\|\||&&|!)
+      set: expression
+    - match: \|\||&&|!
       scope: keyword.operator.boolean.awk
-    - match: '([+\-*/%^])(?=[^/]*[,\);\n])' #Lookahead for expression end to exclude regexp
+      set: expression
+    - match: '[+\-*/%^]'
       scope: keyword.operator.arithmetic.awk
-    - match: "([?:])"
+      set: expression
+    - match: '[?:]'
       scope: keyword.operator.trinary.awk
-    - match: '(\[|\])'
+      set: expression
+    - match: '\['
       scope: keyword.operator.index.awk
+      set: expression
+    - match: '\]'
+      scope: keyword.operator.index.awk
+      set: expression
+    - match: '(?=[\S])'
+      pop: true
