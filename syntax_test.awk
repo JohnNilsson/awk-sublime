@@ -1,5 +1,6 @@
 # SYNTAX TEST "AWK.sublime-syntax"
-
+# <- punctuation.definition.comment.awk
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ punctuation.definition.comment.awk
 function f(x,y){
 # <-             storage.type.function.awk
 #        ^       entity.name.function.awk
@@ -55,4 +56,16 @@ BEGIN {
 #                 ^     constant.numeric.awk
 #                   ^   keyword.operator.arithmetic.awk
 #                     ^ constant.numeric.awk
+}
+# <- meta.brace.curly.awk
+
+BEGIN {
+  if (/\{\}/) {
+# ^^ keyword.control.awk
+#     ^ punctuation.definition.regex.begin.awk
+#          ^ punctuation.definition.regex.end.awk
+  } else {
+#   ^^^^ keyword.control.awk
+  }
+
 }
