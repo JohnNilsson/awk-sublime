@@ -97,13 +97,11 @@ contexts:
 
   string-constant:
     - match: '"'
-      captures:
-        0: punctuation.definition.string.begin.awk
+      scope: punctuation.definition.string.begin.awk
       push:
         - meta_scope: string.quoted.double.awk
         - match: '"'
-          captures:
-            0: punctuation.definition.string.end.awk
+          scope: punctuation.definition.string.end.awk
           pop: true
         - include: escaped-char
 
