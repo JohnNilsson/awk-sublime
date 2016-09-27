@@ -1,6 +1,7 @@
 # SYNTAX TEST "AWK.sublime-syntax"
 # <- punctuation.definition.comment.awk
-#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ punctuation.definition.comment.awk
+# <- comment.line.number-sign.awk
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ comment.line.number-sign.awk
 function f(x,y){
 # <-             storage.type.function.awk
 #        ^       entity.name.function.awk
