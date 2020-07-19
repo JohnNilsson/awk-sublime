@@ -58,12 +58,13 @@ BEGIN {
 #                   ^   keyword.operator.arithmetic.awk
 #                     ^ constant.numeric.awk
 
-    var[2] = 1
-#      ^       keyword.operator.index.awk
-#       ^      constant.numeric.awk
-#        ^     keyword.operator.index.awk
-#          ^   keyword.operator.assignment.awk
-#            ^ constant.numeric.awk
+    var[2,1+4] = 1
+#      ^    keyword.operator.index.awk
+#       ^   constant.numeric.awk
+#        ^  punctuation.separator.index.awk
+#            ^     keyword.operator.index.awk
+#              ^   keyword.operator.assignment.awk
+#                ^ constant.numeric.awk
 
 }
 # <- meta.brace.curly.awk

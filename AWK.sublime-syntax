@@ -205,6 +205,8 @@ contexts:
         - match: '\]'
           scope: keyword.operator.index.awk
           pop: true
+        - match: ','
+          scope: punctuation.separator.index.awk
         - include: expression
     - match: '(?=[\S])'
       pop: true
