@@ -57,8 +57,20 @@ BEGIN {
 #                 ^     constant.numeric.awk
 #                   ^   keyword.operator.arithmetic.awk
 #                     ^ constant.numeric.awk
+
+    var[2] = 1
+#      ^       keyword.operator.index.awk
+#       ^      constant.numeric.awk
+#        ^     keyword.operator.index.awk
+#          ^   keyword.operator.assignment.awk
+#            ^ constant.numeric.awk
+
 }
 # <- meta.brace.curly.awk
+
+{ line[NR] = $0 }  # remember each input line
+#               ^    meta.brace.curly.awk
+#                  ^ punctuation.definition.comment.awk
 
 BEGIN {
   if (/\{\}/) {

@@ -201,9 +201,10 @@ contexts:
       set: expression
     - match: '\['
       scope: keyword.operator.index.awk
-      set: expression
-    - match: '\]'
-      scope: keyword.operator.index.awk
-      set: expression
+      push:
+        - match: '\]'
+          scope: keyword.operator.index.awk
+          pop: true
+        - include: expression
     - match: '(?=[\S])'
       pop: true
