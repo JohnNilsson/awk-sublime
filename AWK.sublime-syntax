@@ -123,7 +123,7 @@ contexts:
     - match: /
       scope: punctuation.definition.regex.begin.awk
       push:
-        - meta_content_scope: string.regexp
+        - meta_scope: string.regexp
         - match: "(/)([gimy]*)"
           captures:
             1: punctuation.definition.regex.end.awk

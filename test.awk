@@ -39,6 +39,10 @@ $0 ~ /abc[123]/ {
     print "This line shouldn't be white"
 }
 
+/^#/ { print (n ? "\n" : "")$0 }
+MyVar = "The \"quick brown fox\" jumped over the lazy dogs."
+gsub(/"/, "", MyVar)
+
 /[-.]/ {
 
 }

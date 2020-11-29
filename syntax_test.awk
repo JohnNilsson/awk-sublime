@@ -11,10 +11,11 @@ function f(x,y){
 #             ^  punctuation.definition.parameters.end.awk
 }
 
-/^ab$/ {
-# <-   punctuation.definition.regex.begin.awk
-#^^^^  string.regexp
-#    ^ punctuation.definition.regex.end.awk
+/^ab#$#/gimy {
+# <-    punctuation.definition.regex.begin.awk
+#      ^ punctuation.definition.regex.end.awk
+#       ^^^^ keyword.other.awk
+#^^^^^^^^^^^ string.regexp
 }
 
 BEGIN {
